@@ -1,9 +1,8 @@
-package com.example.movietv
+package com.example.movietv.network
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.movietv.model.Category
-import com.example.movietv.model.CategoryItem
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -21,7 +20,8 @@ object FetchItems {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        mApiService = mRetrofit.create(MovieServices::class.java)
+        mApiService = mRetrofit.create(
+            MovieServices::class.java)
     }
 
     fun getAll(): MutableLiveData<Category> {

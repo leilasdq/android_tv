@@ -1,4 +1,4 @@
-package com.example.movietv
+package com.example.movietv.network
 
 import com.example.movietv.model.Category
 import com.example.movietv.model.CategoryItem
