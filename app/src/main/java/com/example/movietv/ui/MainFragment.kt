@@ -21,5 +21,31 @@ class MainFragment: BrowseSupportFragment() {
         title = "Movies"
         showTitle(true)
         headersState = HEADERS_ENABLED
+
+        setAdapter()
+    }
+
+    private fun setAdapter(){
+        val listAdapter = ArrayObjectAdapter(ListRowPresenter())
+        val moviePresenter = MoviePresenter(requireContext())
+
+        fun getList(){
+            FetchItems.getAll().observe(this, Observer {
+                for ((index, element) in it.withIndex()){
+                    val header = HeaderItem(index.toLong(), element.category_name)
+                    val movieAdapter = ArrayObjectAdapter(moviePresenter)
+
+                    for (item in element.movies){
+                        movieAdapter.add(Movy(item.link, item.title))
+                    }
+
+                    listAdapter.add(ListRow(header, movieAdapter))
+                }
+
+                adapter = listAdapter
+            })
+        }
+
+        getList()
     }
 }
