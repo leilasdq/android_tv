@@ -8,7 +8,7 @@ import androidx.leanback.widget.Presenter
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.example.movietv.R
-import com.example.movietv.model.Movy
+import com.example.movietv.model.Movie
 
 class MoviePresenter(private val context: Context): Presenter() {
     override fun onCreateViewHolder(parent: ViewGroup?): ViewHolder {
@@ -22,7 +22,7 @@ class MoviePresenter(private val context: Context): Presenter() {
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder?, item: Any?) {
-        (item as? Movy)?.let {movie->
+        (item as? Movie)?.let { movie->
             (viewHolder?.view as? ImageCardView)?.apply {
                 titleText = movie.title
                 contentText = movie.detail
