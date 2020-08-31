@@ -41,7 +41,7 @@ class DialogFragment: GuidedStepSupportFragment() {
                     )
                 )
             } else {
-                Toast.makeText(requireContext(), "No link to play...", Toast.LENGTH_SHORT).show()
+                startActivity(Intent(activity, ErrorActivity::class.java))
             }
             1L -> Toast.makeText(requireContext(), "You Added this to your favorite list.", Toast.LENGTH_LONG).show()
         }

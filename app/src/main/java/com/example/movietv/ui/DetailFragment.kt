@@ -77,11 +77,7 @@ class DetailFragment : DetailsSupportFragment() {
                                 )
                             )
                         } else {
-                            Toast.makeText(
-                                requireContext(),
-                                "No link to play...",
-                                Toast.LENGTH_SHORT
-                            ).show()
+                            startActivity(Intent(activity, ErrorActivity::class.java))
                         }
                     } else if (item.id.toInt() == 1) {
                         startActivity(
