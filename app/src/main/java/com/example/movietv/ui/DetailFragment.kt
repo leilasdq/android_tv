@@ -1,5 +1,6 @@
 package com.example.movietv.ui
 
+import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -66,7 +67,18 @@ class DetailFragment: DetailsSupportFragment() {
         onItemViewClickedListener = OnItemViewClickedListener { itemViewHolder, item, rowViewHolder, row ->
             if (item is Action){
                 if (item.id.toInt() == 0){
-                    Toast.makeText(requireContext(), "On Play Clicked", Toast.LENGTH_SHORT).show()
+                    if(selectedMovie.link != "") {
+                        startActivity(
+                            Intent(activity, PlayerActivity::class.java).putExtra(
+                                EXTRA_MOVIE,
+                                selectedMovie
+                            )
+                        )
+                    } else {
+                        Toast.makeText(requireContext(), "No link to play...", Toast.LENGTH_SHORT).show()
+                    }
+                } else if (item.id.toInt() == 1){
+                    Toast.makeText(requireContext(), "On Like Clicked", Toast.LENGTH_SHORT).show()
                 }
             }
         }
