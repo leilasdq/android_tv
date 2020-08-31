@@ -19,9 +19,9 @@ import com.example.movietv.presenter.DetailPresenter
 private const val DETAIL_THUMB_WIDTH = 300
 private const val DETAIL_THUMB_HEIGHT = 400
 
-class DetailFragment: DetailsSupportFragment() {
+class DetailFragment : DetailsSupportFragment() {
 
-    companion object{
+    companion object {
         const val EXTRA_MOVIE = "EXTRA_MOVIE"
     }
 
@@ -54,37 +54,48 @@ class DetailFragment: DetailsSupportFragment() {
             })
     }
 
-    private fun setActionAdapter(){
+    private fun setActionAdapter() {
         val actionAdapter = ArrayObjectAdapter().apply {
             add(Action(0, "Play").apply {
-                icon = resources.getDrawable(R.drawable.ic_baseline_play_circle_filled_24)})
+                icon = resources.getDrawable(R.drawable.ic_baseline_play_circle_filled_24)
+            })
             add(Action(1, "Like").apply {
                 icon = resources.getDrawable(R.drawable.ic_baseline_favorite_24)
             })
         }
         detailOverviewRow.actionsAdapter = actionAdapter
 
-        onItemViewClickedListener = OnItemViewClickedListener { itemViewHolder, item, rowViewHolder, row ->
-            if (item is Action){
-                if (item.id.toInt() == 0){
-                    if(selectedMovie.link != "") {
+        onItemViewClickedListener =
+            OnItemViewClickedListener { itemViewHolder, item, rowViewHolder, row ->
+                if (item is Action) {
+                    if (item.id.toInt() == 0) {
+                        if (selectedMovie.link != "") {
+                            startActivity(
+                                Intent(activity, PlayerActivity::class.java).putExtra(
+                                    EXTRA_MOVIE,
+                                    selectedMovie
+                                )
+                            )
+                        } else {
+                            Toast.makeText(
+                                requireContext(),
+                                "No link to play...",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    } else if (item.id.toInt() == 1) {
                         startActivity(
-                            Intent(activity, PlayerActivity::class.java).putExtra(
+                            Intent(activity, DialogActivity::class.java).putExtra(
                                 EXTRA_MOVIE,
                                 selectedMovie
                             )
                         )
-                    } else {
-                        Toast.makeText(requireContext(), "No link to play...", Toast.LENGTH_SHORT).show()
                     }
-                } else if (item.id.toInt() == 1){
-                    Toast.makeText(requireContext(), "On Like Clicked", Toast.LENGTH_SHORT).show()
                 }
             }
-        }
     }
 
-    private fun setupPresenter(){
+    private fun setupPresenter() {
         val classPresenterSelector = ClassPresenterSelector().apply {
             addClassPresenter(DetailsOverviewRow::class.java, detailFullOverviewPresenter)
             addClassPresenter(ListRow::class.java, ListRowPresenter())
